@@ -1,0 +1,50 @@
+version: "5.0"
+
+services:
+  django:
+    container_name: django
+    build:
+      context: .
+    command: uvicorn booking_system.asgi:application --host 0.0.0.0 --port 8000 --workers 4 --log-level debug --reload
+    volumes:
+      - ./booking_system:/src/app/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./env_vars_django.txt
+    depends_on:
+      - rabbitmq
+      - redis
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  celery:
+    build:
+      context: .
+    container_name: celery_worker
+    command: celery -A booking_system flower
+    depends_on:
+      - rabbitmq
+      - redis
+
+  flower:
+    build:
+      context: .
+    container_name: flower
+    command: celery -A booking_system flower
+    ports:
+      - "5555:5555"
+    depends_on:
+      - rabbitmq
+      - redis

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .form-title{
+        background-color: black;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        margin-top: 25px;
+        margin-left: 35%;
+        margin-right: 35%;
+    }
+
+    .form-division{
+
+        width: 70%;
+        text-align: center;
+        margin-left: 15%;
+        margin-right: 25%;
+        margin-top: 25px;
+        border-radius: 2%;
+        font-weight: bold;
+        color: black;
+        font-size: 20px;
+    }
+
+    .form-links{
+        background-color: grey;
+        margin-left: 84%;
+        margin-right: 5%;
+        margin-bottom: 2%;
+        margin-top: 2%;
+        text-align: center;
+    }
+    .form-links:hover{
+        background-color: violet;
+        font-weight: bold;
+        font-size: 15px;
+        color: black;
+    }
+
+    .form-links a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .inner-form-link-a{
+        background-color: white;
+        color: black;
+        font-weight: bold;
+        width: 20%;
+        margin-bottom: 2%;
+        border: 5px solid black;
+    }
+
+    .inner-form-link-a:hover{
+        background-color: black;
+        font-weight: bold;
+        font-size: 15px;
+        color: white;
+        border-radius: 50%;
+    }
+
+    .form-link-bottom-a{
+        background-color: blue;
+        color: white;
+        font-weight: bold;
+        width: 20%;
+        margin-bottom: 2%;
+    }
+</style>
+
+<h2 class="form-title">DELETE</h2>
+
+    <div class="form-division">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Are you sure, you to delete the following information?: <br><br>
+                    {{ obj }}
+                </label>
+            </div>
+            <div class="inner-form-link">
+                <button class="inner-form-link-a" type="submit">Yes Delete</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <div class="form-links">
+
+                <a class="form-link-a" href="{{ request.META.HTTP_REFERER }}">Go Back</a> | <a href="{% url 'home' %}">Home</a>
+
+        </div>
+    </div>
+
+
+{% endblock content %}

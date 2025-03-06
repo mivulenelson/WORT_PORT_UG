@@ -1,0 +1,74 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/style2.css' %}" rel="stylesheet" type="text/css">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>WORTH_PORT_UG</title>
+  <style>
+  @font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Material Icons'),
+      local('MaterialIcons-Regular'),
+  }
+  @font-face {
+    font-family: 'Material Icons Round';
+    font-style: normal;
+    font-weight: 400;
+    src: local("MaterialIcons-Round"),
+  }
+  @font-face {
+    font-family: 'Cardo Bold';
+    font-style: normal;
+    font-weight: bold;
+    src: local('Cardo'),
+      local('Cardo-Bold'),
+  }
+  @font-face {
+    font-family: 'Cardo Italic';
+    font-style: italic;
+    font-weight: 400;
+    src: local('Cardo'),
+      local('Cardo-Italic'),
+  }
+  @font-face {
+    font-family: 'Helvetica Light';
+    font-style: normal`;
+    font-weight: 400;
+    src: local('Helvetica Light'),
+      local('Helvetica-Light'),
+  }
+body {
+      background-color: #b4b4b4;
+      }
+  </style>
+</head>
+
+<body class="course-home-page">
+
+ {% include "navbar.html" %}
+
+ {% if messages %}
+    {% for message in messages %}
+        <div style="background-color: black; width: 75%; margin-left: 20%; margin-top: 1.5%; text-align: center; font-size: 20px;">
+            <p><small style="color: white; font-weight: bold;">{{ message }}</small></p>
+        </div>
+    {% endfor %}
+
+{% endif %}
+
+  {% block content %}
+
+ {% endblock content %}
+
+{% include "footer.html" %}
+
+</body>
+
+</html>

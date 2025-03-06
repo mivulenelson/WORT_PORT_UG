@@ -1,0 +1,145 @@
+{% load static %}
+
+<style>
+
+	.table-anchor{
+		text-decoration: None;
+	}
+
+	.table-anchor:hover {
+		text-decoration: None;
+		font-weight: bold;
+		font-size: 10px;
+	}
+
+	.header {
+        background-color: black;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        margin-top: 10px;
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+
+	 .form-links{
+	 	background-color: black;
+        margin-left: 84%;
+        margin-right: 5%;
+        margin-bottom: 2%;
+        margin-top: 1%;
+        text-align: center;
+        border-radius: 10%;
+        color: #ffff;
+    }
+    .form-links:hover{
+        background-color: black;
+        font-weight: bold;
+        color: #ffff;
+    }
+
+    .form-links a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+</style>
+
+<div class="footer" style="">
+    <div class="footer-main-content mx-auto">
+    	<div class="col-12 px-0">
+        	<div class="row align-items-center mx-0">
+            	<div class="col-12 col-md-9 px-0">
+					<div class="d-md-flex align-items-center">
+						<a href="{% url 'home' %}" target="_blank">
+							<img src="{% static 'images/b_log.png' %}" alt="Home" style="height: 70px; border-radius: 50%;"/>
+						</a>
+						<div class="ml-md-3 mt-4 mt-md-0">
+							<div class="font-weight-bold">
+								We Are Worth
+							</div>
+							<div>
+								We offer transport services.<br><br>
+
+								<table class="table">
+    <thead>
+        <tr>
+            <th>SERVICE</th>
+            <th>DESCRIPTION</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for service in services %}
+        <tr>
+
+            <th>{{ service.name }}</th>
+            <th>{{ service.description }}</th>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+							</div>
+						</div>
+					</div>
+            	</div>
+				<div class="col-12 col-md-3 px-0 d-none d-md-block">
+					<div class="d-flex justify-content-md-end">
+<!--	<div>-->
+<!--		<a href="" target="_blank">-->
+<!--			<img class="footer-social-icon ml-0" src="{% static 'images/Facebook.f4c9d732fd0e8bae1e01.png' %}" alt="facebook"/>-->
+<!--		</a>-->
+<!--	</div>-->
+<!--	<div>-->
+<!--		<a href="" target="_blank">-->
+<!--			<img class="footer-social-icon" src="{% static 'images/Instagram.b81e71401e1f281d343a.png' %}" alt="instagram"/>-->
+<!--		</a>-->
+<!--	</div>-->
+<!--	<div>-->
+<!--		<a href="" target="_blank">-->
+<!--			<img class="footer-social-icon" src="{% static 'images/x-formerly-twitter-black.98abb20137ea3cdc5cef.png' %}" alt="x (formerly twitter)"/>-->
+<!--		</a>-->
+<!--	</div>-->
+<!--	<div>-->
+<!--		<a href="" target="_blank">-->
+<!--			<img class="footer-social-icon" src="{% static 'images/Youtube.dec30cb84b5d4e836e64.png' %}" alt="youtube"/>-->
+<!--		</a>-->
+<!--	</div>-->
+<!--	<div>-->
+<!--		<a href="" target="_blank">-->
+<!--			<img class="footer-social-icon" src="{% static 'images/linkedin-black.8b4e88fcddcd8b3a89aa.png' %}" alt="linkedin"/>-->
+<!--		</a>-->
+<!--	</div>-->
+</div>
+
+				</div>
+        	</div>
+    	</div>
+
+		<div class="col-12 mt-3 mt-md-4 px-0">
+			<div class="row align-items-center mx-0">
+            	<div class="col-12 col-md-8 px-0">
+					<div class="d-lg-flex">
+						<div class="pr-md-2 mt-2 mt-lg-0 d-none d-lg-block" style="font-weight: bold;">
+							© All Rights Reserved By: WORTH_PORT_UG
+						</div>
+						<div class="px-lg-2 mt-2 mt-lg-0">
+							<a href="" target="_blank">Other</a>
+						</div>
+
+					</div>
+            	</div>
+				<div class="col-12 col-md-4 px-0">
+					<div class="d-flex justify-content-md-end mt-4 mt-lg-0">
+						<div style="font-weight: bold;">
+						We are Worth:
+						<a href="{% url 'home' %}" target="_blank">
+							<img src="{% static 'images/b_log.png' %}" alt="WORTH_PORT_UG" style="height: 70px; border-radius: 50%;"/>
+						</a>
+						</div>
+					</div>
+				</div>
+        	</div>
+		</div>
+	</div>
+</div>

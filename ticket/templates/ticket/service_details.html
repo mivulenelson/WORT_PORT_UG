@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="footer">
+    <div class="footer-main-content mx-auto">
+    	<div class="col-12 px-0">
+        	<div class="row align-items-center mx-0">
+            	<div class="col-12 col-md-9 px-0">
+					<div class="d-md-flex align-items-center">
+						<div class="ml-md-3 mt-4 mt-md-0">
+
+								<table class="table">
+    <thead>
+        <tr>
+            <th>SERVICE</th>
+            <th>DESCRIPTION</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for service in services %}
+        <tr>
+
+            <th>{{ service.name }}</th>
+            <th>{{ service.description }}</th>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+							</div>
+						</div>
+					</div>
+            	</div>
+        	</div>
+    	</div>
+	</div>
+</div>
+
+{% endblock content %}

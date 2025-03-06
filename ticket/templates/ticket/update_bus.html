@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .form-title{
+        background-color: grey;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        margin-top: 25px;
+        margin-left: 35%;
+        margin-right: 35%;
+    }
+
+    .form-division{
+
+        width: 70%;
+        text-align: center;
+        margin-left: 15%;
+        margin-right: 25%;
+        margin-top: 25px;
+        border-radius: 2%;
+        font-weight: bold;
+        color: black;
+        font-size: 20px;
+    }
+
+    .form-links{
+        background-color: grey;
+        margin-left: 84%;
+        margin-right: 5%;
+        margin-bottom: 2%;
+        margin-top: 2%;
+        text-align: center;
+    }
+    .form-links:hover{
+        background-color: violet;
+        font-weight: bold;
+        font-size: 15px;
+        color: black;
+    }
+
+    .form-links a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .inner-form-link-a{
+        background-color: grey;
+        color: white;
+        font-weight: bold;
+        width: 20%;
+        margin-bottom: 2%;
+        border: None;
+    }
+
+    .inner-form-link-a:hover{
+        background-color: violet;
+        font-weight: bold;
+        font-size: 15px;
+        color: black;
+    }
+
+    .form-link-bottom-a{
+        background-color: blue;
+        color: white;
+        font-weight: bold;
+        width: 20%;
+        margin-bottom: 2%;
+    }
+</style>
+
+<h2 class="form-title">UPDATE BUS</h2>
+
+    <div class="form-division">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.bus_name.id_for_label }}">Bus Name</label>
+                {{ update_bus_form.bus_name  }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.number.id_for_label}}">Number</label>
+                {{ update_bus_form.number }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.start.id_for_label }}">Bus Stage</label>
+                {{ update_bus_form.start }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.stop.id_for_label }}">Bus Stop</label>
+                {{ update_bus_form.stop }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.departure.id_for_label }}">Departure Time</label>
+                {{ update_bus_form.departure }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.arrival.id_for_label }}">Arrival Time</label>
+                {{ update_bus_form.arrival }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.total_seats.id_for_label }}">Total Seats</label>
+                {{ update_bus_form.total_seats }}
+            </div>
+
+            <div class="inner-form-link">
+                <button class="inner-form-link-a" type="submit">SAVE</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <div class="form-links">
+
+                <a class="form-link-a" href="{{ request.META.HTTP_REFERER }}">Go Back</a> | <a href="{% url 'home' %}">Home</a>
+
+        </div>
+    </div>
+{% endblock content %}

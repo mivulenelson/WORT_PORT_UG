@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+    <div id="course-main-content">
+
+      <div class="row course-cards">
+        <div class="col-2 course-home-grid large-and-above-only">
+          <div class="card">
+  <div class="card-body pr-2">
+
+
+<nav class="course-nav">
+  <ul class="w-100 m-auto list-unstyled">
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="79323993-8576-55da-bb37-c0853c17337c"
+          href="">
+            <b>QUICK LINKS </b><hr>
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+
+  <ul
+    class="course-nav-child-nav m-auto collapse"
+    id="nav-container_desktop_79323993-8576-55da-bb37-c0853c17337c"
+    aria-labelledby="nav-button_desktop_79323993-8576-55da-bb37-c0853c17337c"
+  >
+
+  </ul>
+</li>
+
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="d4cbf926-7449-e515-309f-93c4d4a15ee5"
+          href="{% url 'home' %}">
+          Home
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+
+  <ul
+    class="course-nav-child-nav m-auto collapse"
+    id="nav-container_desktop_d4cbf926-7449-e515-309f-93c4d4a15ee5"
+    aria-labelledby="nav-button_desktop_d4cbf926-7449-e515-309f-93c4d4a15ee5"
+  >
+
+  </ul>
+</li>
+
+
+      {% if request.user.is_authenticated and request.user.is_staff or request.user.is_admin %}
+      <li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="d4cbf926-7449-e515-309f-93c4d4a15ee5"
+          href="{% url 'enter-service' %}">
+          Create service
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+
+  <ul aria-labelledby="nav-button_desktop_d4cbf926-7449-e515-309f-93c4d4a15ee5" class="course-nav-child-nav m-auto collapse">
+
+  </ul>
+</li>
+      {% endif %}
+
+
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="607e580d-09fd-cfa0-0f08-a87ae0de6ad6"
+          href="{% url 'book' %}">
+          Book Ticket
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+</li>
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="887b347f-358a-dc23-56e4-a7411b44c7a4"
+          href="{% url 'all-tickets' %}">
+          All Your Tickets
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+
+  <ul
+    class="course-nav-child-nav m-auto collapse"
+    id="nav-container_desktop_887b347f-358a-dc23-56e4-a7411b44c7a4"
+    aria-labelledby="nav-button_desktop_887b347f-358a-dc23-56e4-a7411b44c7a4"
+  >
+
+  </ul>
+</li>
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="e3e3793c-e7ed-9d0a-c7b1-c5e18c2d5918"
+          href="{% url 'all-buses' %}">
+          Available Buses
+        </a>
+
+    </span>
+
+
+
+  </div>
+
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="4d3c5294-e9f0-032d-2060-5ec3fce88e9c"
+          href="{% url 'all-services' %}">
+          Our services
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+
+  <ul
+    class="course-nav-child-nav m-auto collapse"
+    id="nav-container_desktop_4d3c5294-e9f0-032d-2060-5ec3fce88e9c"
+    aria-labelledby="nav-button_desktop_4d3c5294-e9f0-032d-2060-5ec3fce88e9c"
+  >
+
+  </ul>
+</li>
+  </ul>
+</nav>
+
+  </div>
+</div>
+
+        </div>
+        <div class="col-sm-12 col-lg-10 course-home-grid">
+          <div class="">
+            <div class="card">
+              <div class="d-flex justify-content-between">
+    <div class="mb-2">
+      <article class="content pt-3 mt-1">
+
+    <p>
+        <h1 style="text-align: center; margin-bottom: 2%;">{{ bus_bookings_count }} BUS TICKET/S</h1>
+          <table>
+                <thead>
+                <tr>
+                    <th>USER</th>
+                    <th>BOOK NAME</th>
+                    <th>PHONE</th>
+                    <th>BUS</th>
+                    <th>JOURNEY</th>
+                    <th>SEAT</th>
+                    <th>CREATED</th>
+                    <th>ARCHIVED</th>
+                    <th>STATUS</th>
+                </tr>
+
+                </thead>
+          {% for book in bus_bookings %}
+                <tbody>
+                <tr>
+                    <td>{{ book.user }}</td>
+                    <td>{{ book.full_name }}</td>
+                    <td>{{ book.phone}}</td>
+                    <td>{{ book.bus.bus_name}}</td>
+                    <td>{{ book.bus.start }} TO {{ book.bus.stop }}</td>
+                    <td>{{ book.seat}}</td>
+                    <td>{{ book.created_at }}</td>
+                    <td>{{ book.archived }}</td>
+
+                    {% if book.archived %}
+                    <td>CLOSED</td>
+                    {% else %}
+                    <td>WAITING</td>
+                    {% endif %}
+                </tr>
+                </tbody>
+          {% endfor %}
+        </table>
+
+    </p>
+
+
+</article>
+    </div>
+
+                  </div>
+
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+{% endblock content %}

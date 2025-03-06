@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div id="course-main-content">
+
+      <div class="row course-cards">
+        <div class="col-2 course-home-grid large-and-above-only">
+          <div class="card">
+  <div class="card-body pr-2">
+
+
+<nav class="course-nav" aria-label="Course materials">
+  <ul class="w-100 m-auto list-unstyled">
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="79323993-8576-55da-bb37-c0853c17337c"
+          href="">
+            <b>QUICK LINKS </b><hr>
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+
+  <ul
+    class="course-nav-child-nav m-auto collapse"
+    id="nav-container_desktop_79323993-8576-55da-bb37-c0853c17337c"
+    aria-labelledby="nav-button_desktop_79323993-8576-55da-bb37-c0853c17337c"
+  >
+
+  </ul>
+</li>
+
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="d4cbf926-7449-e515-309f-93c4d4a15ee5"
+          href="{% url 'home' %}">
+          Home
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+
+  <ul
+    class="course-nav-child-nav m-auto collapse"
+    id="nav-container_desktop_d4cbf926-7449-e515-309f-93c4d4a15ee5"
+    aria-labelledby="nav-button_desktop_d4cbf926-7449-e515-309f-93c4d4a15ee5"
+  >
+
+  </ul>
+</li>
+
+
+      {% if request.user.is_authenticated and request.user.is_staff or request.user.is_admin %}
+      <li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="d4cbf926-7449-e515-309f-93c4d4a15ee5"
+          href="{% url 'enter-service' %}">
+          Create service
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+
+  <ul aria-labelledby="nav-button_desktop_d4cbf926-7449-e515-309f-93c4d4a15ee5" class="course-nav-child-nav m-auto collapse">
+
+  </ul>
+</li>
+      {% endif %}
+
+
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="607e580d-09fd-cfa0-0f08-a87ae0de6ad6"
+          href="{% url 'book' %}">
+          Book Ticket
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+</li>
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="887b347f-358a-dc23-56e4-a7411b44c7a4"
+          href="{% url 'all-tickets' %}">
+          All Your Tickets
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+
+  <ul
+    class="course-nav-child-nav m-auto collapse"
+    id="nav-container_desktop_887b347f-358a-dc23-56e4-a7411b44c7a4"
+    aria-labelledby="nav-button_desktop_887b347f-358a-dc23-56e4-a7411b44c7a4"
+  >
+
+  </ul>
+</li>
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="e3e3793c-e7ed-9d0a-c7b1-c5e18c2d5918"
+          href="{% url 'all-buses' %}">
+          Available Buses
+        </a>
+
+    </span>
+
+
+
+  </div>
+
+<li class="course-nav-list-item">
+  <div class="course-nav-parent d-flex flex-direction-row align-items-center justify-content-between">
+    <span class="course-nav-text-wrapper">
+
+        <a class="text-dark nav-link"
+          data-uuid="4d3c5294-e9f0-032d-2060-5ec3fce88e9c"
+          href="{% url 'all-services' %}">
+          Our services
+        </a>
+
+    </span>
+
+  </div>
+
+  <span class="medium-and-below-only"><hr/></span>
+
+  <ul
+    class="course-nav-child-nav m-auto collapse"
+    id="nav-container_desktop_4d3c5294-e9f0-032d-2060-5ec3fce88e9c"
+    aria-labelledby="nav-button_desktop_4d3c5294-e9f0-032d-2060-5ec3fce88e9c"
+  >
+
+  </ul>
+</li>
+  </ul>
+</nav>
+
+  </div>
+</div>
+
+        </div>
+        <div class="col-sm-12 col-lg-10 course-home-grid">
+          <div class="">
+
+
+    <div>
+        <style>
+    .form-title{
+        background-color: black;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        margin-top: 25px;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .form-division{
+
+        width: 70%;
+        text-align: center;
+        margin-left: 15%;
+        margin-right: 30%;
+        margin-top: 25px;
+        border-radius: 2%;
+        font-weight: bold;
+        color: black;
+        font-size: 20px;
+    }
+
+    .form-links{
+    }
+    .form-links:hover{
+        background-color: black;
+        font-weight: bold;
+        font-size: 5px;
+        color: white;
+    }
+
+    .form-links-a-1 {
+        color: black;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .inner-form-link-a{
+        font-weight: bold;
+    }
+
+    .inner-form-link-a:hover{
+        background-color: black;
+        font-weight: bold;
+        font-size: 15px;
+        color: #ffff;
+        border-radius: 50%;
+    }
+
+    </style>
+
+        <h2 class="form-title">CREATE A SERVICE</h2>
+
+    <div class="form-division">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}">Enter Service Title</label>
+                {{ service_form.name }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.description.id_for_label }}">Description For The Service</label>
+                {{ service_form.description }}
+            </div>
+
+            <div class="inner-form-link">
+                <button class="inner-form-link-a" type="submit">SAVE</button>
+            </div>
+        </form>
+    </div>
+
+        <div class="form-links">
+
+                <a class="form-link-a-1" href="{{ request.META.HTTP_REFERER }}">Go Back</a> | <a class="form-link-a-2" href="{% url 'home' %}">Home</a>
+
+        </div>
+
+
+    </div>
+
+
+</article>
+    </div>
+
+                  </div>
+
+                </div>
+
+
+              </div>
+
+{% endblock content %}
