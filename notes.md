@@ -1,14 +1,14 @@
 A SIMPLE DIGITAL BUS TICKET BOOKING SYSTEM IN UGANDA BY MIVULE NELSON
 
--->It uses a custom user management model to authenticate users
+--> It uses a custom user management model to authenticate users
 
--->A user can then book a bus ticket based on the available buses
+--> A user can then book a bus ticket based on the available buses
 
--->If a bus is past its time of departure, its archived and the user can not book a ticket for that bus
+--> If a bus is past its time of departure, its archived and the user can not book a ticket for that bus
 
--->I have not included payments in this system, as can be included at any time of need in the future
+--> I have not included payments in this system, as can be included at any time of need in the future
 
--->I have used the python uvicorn as an ASGI server, celery to schedule tasks of sending emails to users and docker to containerize Django, Celery, RabbitMQ, Redis and Flower
+--> I have used the python uvicorn as an ASGI server, celery to schedule tasks of sending emails to users and docker to containerize Django, Celery, RabbitMQ, Redis and Flower
 
 -->It implements Django channels for Websocket communication
 
@@ -18,7 +18,7 @@ A SIMPLE DIGITAL BUS TICKET BOOKING SYSTEM IN UGANDA BY MIVULE NELSON
 FOLLOW THE STEPS BELOW TO RUN THE PROJECT
 
 1. Download the full folder of the project into your computer from my git account 
-()
+(https://github.com/mivulenelson/WORT_PORT_UG/tree/main)
 2. python3 -m venv env_name, to install a virtual environment
 3. source env_name/bin/activate, to activate the environment
 4. pip install django==5.0
