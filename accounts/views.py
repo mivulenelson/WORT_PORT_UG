@@ -16,6 +16,7 @@ def create_user_view(request):
             form = form.save(commit=False)
             email = form.email
             username = form.username
+            contact = form.contact
 
             if not "@gmail.com" in email:
                 messages.error(request, "You must use a valid Gmail account.")
@@ -43,6 +44,7 @@ def login_view(request):
         else:
             messages.error(request, "Please enter the correct email or password so as to be logged in!")
             return redirect("login")
+
     else:
         pass
     services = Service.objects.all()[:2]
@@ -52,40 +54,3 @@ def logout_view(request):
     logout(request)
     return redirect("login")
 
-def forgot_password_view(request, pk):
-    user = User.objects.get(user_id=pk)
-    if request.method == "POST":
-        form = CustomChangeForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save(commit=False)
-            form.save()
-            return redirect("login")
-    else:
-        form = CustomUserCreationForm(instance=user)
-    context = {"form": form}
-    return render(request, "accounts/forgot_password.html", context)
-
-def usersettings_update_view(request):
-
-    user = request.user
-
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form_user = UserSettingsForm(request.POST)
-
-        # check whether it's valid:
-        if form_user.is_valid():
-
-            # Save User model fields
-            user.first_name = request.POST['first_name']
-            user.last_name = request.POST['last_name']
-            user.save()
-
-            # redirect to the index page
-            return HttpResponseRedirect(request.GET.get('next', '/inbox/'))
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form_user = UserSettingsForm(instance=user)
-
-    return render(request, 'main/settings.html', {'form_user': form_user, })

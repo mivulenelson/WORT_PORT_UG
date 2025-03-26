@@ -21,7 +21,7 @@
 
         <a class="text-dark nav-link"
           data-uuid="79323993-8576-55da-bb37-c0853c17337c"
-          href="">
+          href="{% url  'home' %}">
             <b>QUICK LINKS </b><hr>
         </a>
 
@@ -195,14 +195,16 @@
                     <th>TO</th>
                     <th>DEPARTURE</th>
                     <th>ARRIVAL</th>
-                    <th>SEATS</th>
+                    <th>CAPACITY</th>
+                    <th>AMOUNT</th>
                     <th>STATUS</th>
 
                     {% if request.user.is_authenticated and request.user.is_staff or request.user.is_admin %}
                     <th>DELETE</th>
+                    <th>UPDATE</th>
                     {% endif %}
+                    <th>ARCHIVE</th>
 
-                    <th>CREATED</th>
                 </tr>
                 </thead>
 
@@ -215,6 +217,7 @@
                     <td>{{ bus.departure }}</td>
                     <td>{{ bus.arrival }}</td>
                     <td>{{ bus.total_seats }}</td>
+                    <td>{{ bus.amount }}</td>
 
                     {% if bus.archived %}
                     <td>UNAVAILABLE</td>
@@ -225,9 +228,10 @@
 
                     {% if request.user.is_authenticated and request.user.is_staff or request.user.is_admin %}
                     <td><a class="table-anchor" href="{% url 'delete-bus' bus.bus_id %}">Delete</a> </td>
+                    <td><a class="table-anchor" href="{% url 'update-bus' bus.bus_id %}">Update</a> </td>
                     {% endif %}
+                    <td>{{ bus.archived }}</td>
 
-                    <td>{{ bus.created_at }}</td>
                 </tr>
                 </tbody>
 

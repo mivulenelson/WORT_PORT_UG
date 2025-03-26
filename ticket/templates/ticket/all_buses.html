@@ -22,7 +22,7 @@
 
         <a class="text-dark nav-link"
           data-uuid="79323993-8576-55da-bb37-c0853c17337c"
-          href="">
+          href="{% url 'home' %}">
             <b>QUICK LINKS </b><hr>
         </a>
 
@@ -205,6 +205,7 @@
                     <th>ARRIVAL</th>
                     <th>SEATS</th>
                     <th>STATUS</th>
+                    <th>AMOUNT</th>
                     <th>DETAILS</th>
 
                     {% if request.user.is_authenticated and request.user.is_staff or request.user.is_admin %}
@@ -236,6 +237,8 @@
                     {% else %}
                     <td>AVAILABLE</td>
                     {% endif %}
+
+                    <td>{{ bus.amount }}</td>
 
                     <td><a class="table-anchor" href="{% url 'bus-details' bus.bus_id %}">Check Details</a> </td>
 

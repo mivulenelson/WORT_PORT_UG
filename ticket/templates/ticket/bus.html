@@ -18,7 +18,7 @@
 
         <a class="text-dark nav-link"
           data-uuid="79323993-8576-55da-bb37-c0853c17337c"
-          href="">
+          href="{% url 'home' %}">
             <b>QUICK LINKS </b><hr>
         </a>
 
@@ -273,6 +273,11 @@
             <div class="form-group">
                 <label for="form.arrival.id_for_label">Enter Bus Arrival Time (yy-mm-dd 00:00:00)</label>
                 {{ form.arrival }}
+            </div>
+
+            <div class="form-group">
+                <label for="form.amount.id_for_label">Travel Amount</label>
+                {{ form.amount }}
             </div>
 
             <div class="form-group">

@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.utils import timezone
-from push_notifications.models import GCMDevice
 import uuid
 
 User = get_user_model()
@@ -11,6 +9,8 @@ class Bus(models.Model):
         ("AVAILABLE", "AVAILABLE"),
         ("UNAVAILABLE", "UNAVAILABLE")
     )
+
+
     bus_id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     bus_name = models.CharField(max_length=30)
     number = models.CharField(max_length=15, unique=True)
@@ -20,12 +20,18 @@ class Bus(models.Model):
     arrival = models.DateTimeField()
     total_seats = models.PositiveIntegerField()
     status = models.CharField(max_length=15, choices=status_choices, default="AVAILABLE")
+    amount = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
     archived = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.bus_name} From {self.start} To {self.stop}: {self.departure}"
+        return f"{self.bus_name} FROM {self.start} TO {self.stop} -- DATE:{self.departure.day},  HOUR: {self.departure.hour}"
+
+    def get_available_seats(self):
+        booked_seats = [book.seat for book in self.ticket_set.all()]
+        available_seats = [f"{i}" for i in range(1, self.total_seats + 1) if f"{i}" not in booked_seats]
+        return available_seats
 
 
 class Book(models.Model):
@@ -37,13 +43,13 @@ class Book(models.Model):
 
     book_id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="owner", verbose_name="Ticket Owner")
-    bus = models.ForeignKey(Bus, on_delete=models.CASCADE, related_name="book")
-    seat = models.IntegerField(default=0)
+    bus = models.ForeignKey(Bus, on_delete=models.CASCADE, related_name="ticket_set")
+    seat =models.CharField(max_length=2)
     full_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
     status = models.CharField(max_length=225, choices=STATUS_CHOICES, blank=True, null=True, default="WAITING")
     assigned_to = models.ForeignKey(User, blank=True, null=True, verbose_name="Assigned to", on_delete=models.CASCADE)
-    closed_date = models.DateTimeField(blank=True, null=True)
+    is_taken = models.BooleanField(default=False)
     archived = models.BooleanField(default=False)
     attached = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -68,10 +74,6 @@ class Attachment(models.Model):
 
     def __str__(self):
         return f"Attachment for Ticket: {self.book.full_name} by {self.book.user.username}"
-
-
-class Device(GCMDevice):
-    notification_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notification_user", verbose_name="Notifications")
 
 
 class Service(models.Model):

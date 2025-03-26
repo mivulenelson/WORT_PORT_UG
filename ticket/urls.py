@@ -21,6 +21,7 @@ urlpatterns = [
     path("update-ticket/<str:book_id>/", views.book_update_view, name="update-ticket"),
     path("update-bus/<str:bus_id>/", views.bus_update_view, name="update-bus"),
     path("update-service/<str:service_id>/", views.service_update_view, name="update-service"),
+    path("update-bus/<str:bus_id>/", views.update_archived_bus, name="update-archived"),
 
     # All details urls
     path("bus-details/<str:bus_id>/", views.bus_details_views, name="bus-details"),
@@ -33,3 +34,4 @@ urlpatterns = [
     path("delete-bus/<str:bus_id>/", views.delete_bus_view, name="delete-bus"),
     path("delete-service/<str:service_id>/", views.delete_service_view, name="delete-service"),
 ]
+

@@ -49,6 +49,7 @@ class CustomUser(AbstractBaseUser, PermissionManager):
     user_id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, unique=True, verbose_name="ID")
     email = models.EmailField(unique=True, max_length=225, verbose_name="Email address")
     username = models.CharField(max_length=30, verbose_name="Username")
+    contact = models.CharField(max_length=15, verbose_name="User contact")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)

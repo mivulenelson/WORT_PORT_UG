@@ -20,7 +20,7 @@
 
         <a class="text-dark nav-link"
           data-uuid="79323993-8576-55da-bb37-c0853c17337c"
-          href="">
+          href="{% url 'home' %}">
             <b>QUICK LINKS </b><hr>
         </a>
 
@@ -194,6 +194,7 @@
                     <th>BUS</th>
                     <th>JOURNEY</th>
                     <th>SEAT</th>
+                    <th>AMOUNT</th>
                     <th>CREATED</th>
                     <th>ARCHIVED</th>
                     <th>STATUS</th>
@@ -209,6 +210,7 @@
                     <td>{{ book.bus.bus_name}}</td>
                     <td>{{ book.bus.start }} TO {{ book.bus.stop }}</td>
                     <td>{{ book.seat}}</td>
+                    <td>{{ book.bus.amount }}</td>
                     <td>{{ book.created_at }}</td>
                     <td>{{ book.archived }}</td>
 

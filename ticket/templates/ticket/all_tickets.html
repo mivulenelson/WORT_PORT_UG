@@ -22,7 +22,7 @@
 
         <a class="text-dark nav-link"
           data-uuid="79323993-8576-55da-bb37-c0853c17337c"
-          href="">
+          href="{% url 'home' %}">
             <b>QUICK LINKS </b><hr>
         </a>
 
@@ -186,18 +186,31 @@
       <article class="content pt-3 mt-1">
 
     <p>
+
+          {% if request.user.is_staff or request.user.is_admin %}
+          <h1 style="text-align: center; margin-bottom: 2%;">ALL CREATED TICKETS</h1>
+          {% else %}
           <h1 style="text-align: center; margin-bottom: 2%;">ALL YOUR CREATED TICKETS</h1>
+          {% endif %}
+
+
                     <small style="font-weight: bold;">:~~: Please check ticket details to attach payments.</small>
 
           <table>
 
                 <thead>
                 <tr>
+                    {% if request.user.is_staff or request.user.is_admin %}
+                    <th>USER</th>
+                    {% endif %}
                     <th>NAME</th>
                     <th>PHONE</th>
                     <th>BUS</th>
+                    <th>FROM</th>
+                    <th>TO</th>
                     <th>SEAT</th>
                     <th>STATUS</th>
+                    <th>AMOUNT</th>
                     <th>CREATED</th>
                      <th>ARCHIVED</th>
                     <th>DETAILS</th>
@@ -211,20 +224,31 @@
                 <tbody>
 
                 <tr>
+                    {% if request.user.is_staff or request.user.is_admin %}
+                    <td><b>{{ book.user }}</b></td>
+                    {% endif %}
                     <td>{{ book.full_name }}</td>
                     <td>{{ book.phone }}</td>
                     <td>{{ book.bus.bus_name }}</td>
+                    <td>{{ book.bus.start }}</td>
+                    <td>{{ book.bus.stop }}</td>
                     <td>{{ book.seat }}</td>
 
-                    {% if book.bus.archived %}
+                    {% if book.bus.archived == True %}
                     <td>CLOSED</td>
                     {% else %}
                     <td>WAITING</td>
                     {% endif %}
 
+                    <td>{{ book.bus.amount }}</td>
 
                     <td>{{ book.created_at }}</td>
-                    <td>{{ book.archived }}</td>
+
+                    {% if book.bus.archived == True %}
+                    <td>True</td>
+                    {% else %}
+                    <td>False</td>
+                    {% endif %}
                     <td><a class="table-anchor" href="{% url 'book-details' book.book_id %}">check details</a> </td>
                     <td><a class="table-anchor" href="{% url 'delete-ticket' book.book_id %}">Delete</a> </td>
                 </tr>

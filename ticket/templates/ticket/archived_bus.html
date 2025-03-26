@@ -20,7 +20,7 @@
 
         <a class="text-dark nav-link"
           data-uuid="79323993-8576-55da-bb37-c0853c17337c"
-          href="">
+          href="{% url 'home' %}">
             <b>QUICK LINKS </b><hr>
         </a>
 
@@ -192,33 +192,41 @@
                     <th>NUMBER</th>
                     <th>FROM</th>
                     <th>TO</th>
-                    <th>DEPARTURE</th>
+                    <th>DEPART</th>
                     <th>ARRIVAL</th>
                     <th>SEATS</th>
+                    <th>AMOUNT</th>
 
                     {% if request.user.is_staff or request.user.is_admin %}
                         <th>ARCHIVE</th>
+                    <th>Update</th>
                     {% else %}
                         <th>ARCHIVED</th>
                     {% endif %}
                     <th>STATUS</th>
+
+                    {% if request.user.is_authenticated and request.user.is_staff or request.user.is_admin %}
+                    <th>DELETE</th>
+                    {% endif %}
                 </tr>
 
                 </thead>
           {% for bus in archived_buses %}
                 <tbody>
                 <tr>
-                    <td>{{ bus.bus_name}}</td>
+                    <td><a class="table-anchor" href="{% url 'bus-details' bus.bus_id %}">{{ bus.bus_name }}</a> </td>
                     <td>{{ bus.number }}</td>
                     <td>{{ bus.start }}</td>
                     <td>{{ bus.stop}}</td>
                   <td>{{ bus.departure }}</td>
                   <td>{{ bus.arrival }}</td>
                   <td>{{ bus.total_seats }}</td>
+                    <td>{{ bus.amount }}</td>
 
                     {% if bus.archived %}
                         {% if request.user.is_staff or request.user.is_admin%}
                             <td><a class="table-anchor" href="{% url 'archived-books' bus.bus_id %}">check tickets</a></td>
+                     <td><a class="table-anchor" href="{% url 'update-archived' bus.bus_id %}">update</a></td>
                         {% else %}
                             <td>{{bus.archived}}</td>
                         {% endif %}
@@ -226,10 +234,14 @@
                       <td>FALSE</td>
                     {% endif %}
 
-                  {% if bus.archived %}
+                  {% if bus.archived == True %}
                     <td>UNAVAILABLE</td>
                   {% else %}
                     <td>AVAILABLE</td>
+                    {% endif %}
+
+                    {% if request.user.is_authenticated and request.user.is_staff or request.user.is_admin %}
+                    <td><a class="table-anchor" href="{% url 'delete-bus' bus.bus_id %}">Delete</a> </td>
                     {% endif %}
                 </tr>
                 </tbody>

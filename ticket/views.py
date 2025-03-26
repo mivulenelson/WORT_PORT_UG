@@ -1,21 +1,22 @@
+from django.core.mail.backends.smtp import EmailBackend
 from django.contrib import messages
 from django.utils import timezone
+import time
 from django.core.mail import send_mail
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Bus, Book, Service, Attachment, Device
-from .forms import BusForm, BookForm, ServiceForm, UpdateBookForm, AttachmentForm
+from .models import Bus, Book, Service, Attachment
+from .forms import BusForm, BookForm, ServiceForm, UpdateBookForm, AttachmentForm, UpdateBusForm
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now, timedelta
 from django.contrib.auth import get_user_model
-# from push_notifications.gcm import send_message
-from django.http import HttpResponse
-from datetime import datetime
+from django.http import JsonResponse
 
 users = get_user_model()
 
 @login_required(login_url="register")
 def home(request):
+
     books = Book.objects.order_by("-created_at")[:3]
 
     services = Service.objects.all()[:2]
@@ -24,9 +25,8 @@ def home(request):
 
 @login_required(login_url="login")
 def all_buses(request):
-    current_time = now()
 
-    all_created_buses = Bus.objects.filter(departure__gt=current_time)
+    all_created_buses = Bus.objects.filter(archived=False)
 
     services = Service.objects.all()[:2]
     context = {"all_created_buses": all_created_buses, "services": services}
@@ -37,7 +37,6 @@ def view_archived_tickets(request):
     current_time = now()
 
     buses = Bus.objects.filter(departure__lte=current_time)
-
     for bus in buses:
         bus.archived = True
         bus.save()
@@ -47,7 +46,7 @@ def view_archived_tickets(request):
             book.archived = True
             book.save()
 
-    archived_buses = Bus.objects.filter(archived=True)
+    archived_buses = Bus.objects.filter(archived=True).order_by("-created_at")
     bus_count = archived_buses.count()
 
     services = Service.objects.all()[:2]
@@ -102,30 +101,18 @@ def enter_bus(request):
 
 @login_required(login_url="login")
 def book_bus(request):
-
     if request.method == "POST":
         form = BookForm(request.POST)
-
         if form.is_valid():
             form = form.save(commit=False)
+            form.bus =  Bus.objects.get(bus_id=request.POST.get("bus"))
             form.user = request.user
 
-            if form.seat == 0:
-                messages.error(request, "You can't choose '0' as a seat.")
-                return redirect("book")
-            elif form.bus.departure == timezone.now():
-                messages.error(request, "That bus has already started it's journey, Please book another.")
-                return redirect("book")
-
-            # user = form.user
-            # device = Device.objects.get(notifications_user=user)
-            # send_message(device, "New Ticket created!")
-
-            # form.upload = Attachment.upload_status
             form.status = "WAITING"
             form.upload = "NO UPLOAD"
+            messages.info(request, f"You have booked a ticket on BUS: {form.bus.bus_name} & NUMBER: {form.bus.number}")
             form.save()
-            return redirect("all-tickets")
+            return redirect("home")
 
     else:
         form = BookForm()
@@ -155,13 +142,10 @@ def attachment_create_view(request, book_id):
 
         if form.is_valid():
             attachment = form.save(commit=False)
-            # attachment = Attachment.objects.create(
-            #     book=book,
-            #     image=request.POST.get("image"),
-            # )
             attachment.book = book
             attachment.status = "UPLOADED"
             attachment.attached = True
+            messages.info(request, f"You have attached payments for ticket booked on BUS: {attachment.book.bus.bus_name}")
             attachment.save()
             book.attached = True
             book.save()
@@ -178,37 +162,54 @@ def book_update_view(request, book_id):
     booking = Book.objects.get(book_id=book_id)
 
     if request.method == "POST":
-        update_form = UpdateBookForm(request.POST, instance=booking)
-        if update_form.is_valid():
-            update_form = update_form.save(commit=False)
+        form = UpdateBookForm(request.POST, instance=booking)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.bus = Bus.objects.get(bus_id=request.POST.get("bus"))
 
-            if update_form.user == request.user:
-                update_form.save()
+            if form.user == booking.user:
+                messages.info(request, f"You have updated your booked ticket on BUS: {form.bus.bus_name}")
+                form.save()
                 return redirect("book-details", book_id)
             else:
                 messages.error(request, "You can't update this Ticket, you did not create it.")
                 return redirect("home")
     else:
-        update_form = UpdateBookForm(instance=booking)
+        form = UpdateBookForm(instance=booking)
     services = Service.objects.all()[:2]
-    context = {"update_form": update_form, "services": services}
+    context = {"form": form, "services": services, "booking": booking}
     return render(request, "ticket/update_ticket.html", context)
 
 @login_required(login_url="login")
 def bus_update_view(request, bus_id):
-    instance = Bus.objects.get(bus_id=bus_id)
+    bus = Bus.objects.get(bus_id=bus_id)
 
     if request.method == "POST":
-        update_bus_form = BusForm(request.POST, instance=instance)
-        if update_bus_form.is_valid():
-            update_bus_form = update_bus_form.save(commit=False)
-            update_bus_form.save()
+        form = UpdateBusForm(request.POST, instance=bus)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.save()
+            return redirect("all-buses")
+    else:
+        form = UpdateBusForm(instance=bus)
+    services = Service.objects.all()[:2]
+    context = {"services": services, "form": form}
+    return render(request, "ticket/update_bus.html", context)
+
+@login_required(login_url="login")
+def update_archived_bus(request, bus_id):
+    bus = Bus.objects.filter(bus_id=bus_id, archived=True)
+
+    if request.method == "POST":
+        form = UpdateBusForm(request.POST, instance=bus)
+        if form.is_valid():
+            form.save()
             return redirect("bus-details", bus_id)
     else:
-        update_bus_form = BusForm(instance=instance)
+        form = UpdateBusForm(instance=bus)
     services = Service.objects.all()[:2]
-    context = {"update_bus_form": update_bus_form, "services": services}
-    return render(request, "ticket/update_bus.html", context)
+    context = {"form": form, "services": services}
+    return render(request, "ticket/update_bus.form", context)
 
 @login_required(login_url="login")
 def service_update_view(request, service_id):
@@ -236,9 +237,11 @@ def bus_details_views(request, bus_id):
 
 @login_required(login_url="login")
 def book_details_view(request, book_id):
+    # current_time = now()
     book = Book.objects.get(book_id=book_id)
-    services = Service.objects.all()[:2]
 
+    # send_bus_departure_notifications()
+    services = Service.objects.all()[:2]
     context = {"book": book, "services": services}
     return render(request, "ticket/book_details.html", context)
 
@@ -263,10 +266,16 @@ def delete_book_view(request, book_id):
     book = get_object_or_404(Book, book_id=book_id)
 
     if request.method == "POST":
-        if request.user == book.user or request.user.is_staff or request.user.is_admin:
+        if request.user == book.user:
             book.delete()
             messages.info(request, "You have have deleted your ticket")
             return redirect("home")
+
+        elif request.user.is_staff or request.user.is_admin:
+            book.delete()
+            messages.info(request, f"You have have deleted {book.user.username} ticket.")
+            return redirect("home")
+
         else:
             messages.error(request, "Not Your Ticket.")
             return redirect("home")
@@ -294,18 +303,3 @@ def delete_service_view(request, service_id):
     services = Service.objects.all()[:2]
     context = {"obj": service, "services": services}
     return render(request, "ticket/delete.html", context)
-
-# send notifications
-# def send_notification(request, book_id):
-#     book = Book.objects.get(book_id=book_id)
-#     user = book.user
-#     device = Device.objects.get(notifications_user=user)
-#     send_message(device, "New Ticket created!")
-#     return HttpResponse("Notification sent!")
-
-
-
-
-
-
-

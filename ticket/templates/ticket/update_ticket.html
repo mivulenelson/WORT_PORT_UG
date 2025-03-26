@@ -1,8 +1,9 @@
-{% extends "base.html" %}
-
+<!-- booking.html -->
+{% extends 'base.html' %}
 {% block content %}
 
-<div id="course-main-content">
+
+    <div id="course-main-content">
 
       <div class="row course-cards">
         <div class="col-2 course-home-grid large-and-above-only">
@@ -18,7 +19,7 @@
 
         <a class="text-dark nav-link"
           data-uuid="79323993-8576-55da-bb37-c0853c17337c"
-          href="">
+          href="{% url 'home' %}">
             <b>QUICK LINKS </b><hr>
         </a>
 
@@ -196,7 +197,7 @@
         text-align: center;
         margin-left: 15%;
         margin-right: 30%;
-        margin-top: 25px;
+        margin-top: 40px;
         border-radius: 2%;
         font-weight: bold;
         color: black;
@@ -226,41 +227,69 @@
         background-color: black;
         font-weight: bold;
         font-size: 15px;
-        color: white;
+        color: #ffff;
         border-radius: 50%;
     }
+            .errorlist {
+                display: none;
+            }
 
+            .form-group {
+                padding: 20px;
+            }
     </style>
-          <h2 class="form-title">UPDATE YOUR BOOKED  TICKET</h2>
+        <div style="
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 15px;
+">
+            <h3 style="font-weight: bold; margin-top: 10px; margin-bottom: 10px; font-size: 20px;">BOOKED TICKET DETAILS</h3>
+            <p>BUS: {{ booking.bus }}</p>
+            <p>SEAT: {{ booking.seat }}</p>
+            <p>BOOKING NAME: {{ booking.full_name }}</p>
+            <p>PHONE NUMBER: {{ booking.phone }}</p>
+        </div>
+          <h2 class="form-title">UPDATE TICKET</h2>
+
 
     <div class="form-division">
         <form method="post">
             {% csrf_token %}
+
+            {% if form.errors %}
+                {% for field, error in form.errors.items %}
+                    <p>
+                        <small style="color: blue; font-weight: bold; list-display: none; font-size: 30px;">{{ error }}</small>
+                    </p>
+                {% endfor %}
+            {% endif %}
+
             <div class="form-group">
-                <label for="{{ form.bus.id_for_label }}">FULL Name</label>
-                {{ update_form.full_name  }}
+                <label for="form.bus.id_for_label">Select any available bus then back to this ticket bus to see its available seats</label><br>
+                {{ form.bus }}
+            </div>
+
+
+            <div class="form-group">
+                <label for="form.seat.id_for_label">Available Seats</label>
+                {{ form.seat }}
             </div>
 
             <div class="form-group">
-                <label for="{{ form.phone.id_for_label }}">Phone Number</label>
-                {{ update_form.phone }}
+<!--                <label for="{{ form.full_name.id_for_label }}">Enter Full Name</label>-->
+                {{ form.full_name  }}
             </div>
 
             <div class="form-group">
-                <label for="form.bus.id_for_label">Bus</label>
-                {{ update_form.bus }}
-            </div>
-
-            <div class="form-group">
-                <label for="form.seat.id_for_label">Enter Seat</label>
-                {{ update_form.seat }}
+<!--                <label for="{{ form.phone.id_for_label }}">Enter Phone Number</label>-->
+                {{ form.phone }}
             </div>
 
             <div class="inner-form-link">
                 <button class="inner-form-link-a" type="submit">Submit Ticket</button>
             </div>
         </form>
-    </div>
 
         <div class="form-links">
 
@@ -281,4 +310,6 @@
 
 
               </div>
+
+
 {% endblock content %}

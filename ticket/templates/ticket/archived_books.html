@@ -20,7 +20,7 @@
 
         <a class="text-dark nav-link"
           data-uuid="79323993-8576-55da-bb37-c0853c17337c"
-          href="">
+          href="{% url 'home' %}">
             <b>QUICK LINKS </b><hr>
         </a>
 
@@ -197,6 +197,7 @@
                     <th>CREATED</th>
                     <th>ARCHIVED</th>
                     <th>STATUS</th>
+                    <th>AMOUNT</th>
                 </tr>
 
                 </thead>
@@ -212,9 +213,11 @@
                     <td>{{ book.created_at }}</td>
                     <td>{{ book.archived }}</td>
 
-                    {% if book.archived %}
+                    {% if book.archived == True%}
                     <td>CLOSED</td>
                     {% endif %}
+
+                    <td>{{ book.bus.amount }}</td>
                 </tr>
                 </tbody>
           {% endfor %}

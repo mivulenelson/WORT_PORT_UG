@@ -20,7 +20,7 @@
 
         <a class="text-dark nav-link"
           data-uuid="79323993-8576-55da-bb37-c0853c17337c"
-          href="">
+          href="{% url 'home' %}">
             <b>QUICK LINKS </b><hr>
         </a>
 
@@ -217,13 +217,13 @@
                     {% endif %}
                     <th>NAME</th>
                     <th>BUS</th>
-                    <th>FRO</th>
+                    <th>FROM</th>
                     <th>TO</th>
-                    <th>S'T</th>
-                    <th>DEPT</th>
-                    <th>ARR</th>
-                    <th>S'TUS</th>
-                    <th>DTLS</th>
+                    <th>SEAT</th>
+                    <th>DEPARTURE</th>
+                    <th>STATUS</th>
+                    <th>AMOUNT</th>
+                    <th>DETAILS</th>
                     <th>UPLOAD</th>
                     <th>ARCHIVE</th>
                 </tr>
@@ -240,21 +240,24 @@
                         <th>{{ book.user.username }}</th>
                     {% endif %}
                     <td>{{ book.full_name }}</td>
-                    <td>{{ book.bus.bus_name }}</td>
+                    <td><a class="table-anchor" href="{% url 'bus-details' book.bus.bus_id %}">{{ book.bus.bus_name }}</a></td>
                     <td>{{ book.bus.start }}</td>
-                    <td>{{ book.bus.stop }}</td>
                     <td>{{ book.seat }}</td>
                     <td>{{ book.bus.departure }}</td>
                     <td>{{ book.bus.arrival }}</td>
 
-                    {% if book.attached == True%}
+                    {% if book.attached == True and book.bus.archived == False %}
                     <td>ACTIVE</td>
+                    {% elif book.bus.archived == True and book.attached == False or book.attached == True %}
+                    <td>CLOSED</td>
                     {% else %}
                     <td>WAITING</td>
                     {% endif %}
 
+                    <td>{{ book.bus.amount }}</td>
+
                     <td><a class="table-anchor" href="{% url 'book-details' book.book_id %}">
-                            Check Details
+                            Click
                         </a> </td>
 
                     {% if book.attached == True %}
@@ -268,8 +271,12 @@
                     {% endif %}
 
 
-<!--                    <td><a class="table-anchor" href="">NO UPLOAD</a></td>-->
-                    <td>{{ book.archived }}</td>
+<!--                    <td><a class="table-anchor" href="archived-tickets">NO UPLOAD</a></td>-->
+                    {% if book.bus.archived == True %}
+                    <td><a class="table-anchor" href="archived-tickets">True</a></td>
+                    {% else %}
+                    <td><a class="table-anchor" href="archived-tickets">False</a></td>
+                    {% endif %}
                 </tr>
                 </tbody>
 

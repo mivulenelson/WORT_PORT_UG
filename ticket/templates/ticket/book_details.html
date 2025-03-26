@@ -3,7 +3,11 @@
 {% block content %}
 <div>
     <div>
+        {% if request.user.is_staff or request.user.is_admin %}
+        <h1 class="header">TICKET DETAILS</h1>
+        {% else %}
         <h1 class="header">YOUR TICKET DETAILS</h1>
+        {% endif %}
 
          <div id="course-main-content">
 
@@ -21,7 +25,7 @@
 
         <a class="text-dark nav-link"
           data-uuid="79323993-8576-55da-bb37-c0853c17337c"
-          href="">
+          href="{% url 'home' %}">
             <b>QUICK LINKS </b><hr>
         </a>
 
@@ -189,10 +193,16 @@
           <table>
                 <thead>
                 <tr>
+                    {% if request.user.is_staff or request.user.is_is_admin %}
+                    <th>USER</th>
+                    {% endif %}
                     <th>NAME</th>
                     <th>PHONE</th>
                     <th>BUS</th>
+                    <th>FROM</th>
+                    <th>TO</th>
                     <th>SEAT</th>
+                    <th>AMOUNT</th>
                     <th>STATUS</th>
                     <th>DATE</th>
                     <th>UPDATE</th>
@@ -203,10 +213,16 @@
 
                 <tbody>
                 <tr>
+                    {% if request.user.is_staff or request.user.is_admin %}
+                    <td><b>{{ book.user }}</b></td>
+                    {% endif %}
                     <td>{{ book.full_name }}</td>
                     <td>{{ book.phone }}</td>
-                    <td>{{ book.bus.bus_name }}</td>
+                    <td><a class="table-anchor" href="{% url 'bus-details' book.bus.bus_id %}">{{ book.bus.bus_name }}</a></td>
+                    <td>{{ book.bus.start }}</td>
+                    <td>{{ book.bus.stop }}</td>
                     <td>{{ book.seat }}</td>
+                    <td>{{ book.bus.amount }}</td>
 
                     {% if book.attached == True %}
                     <td>ACTIVE</td>
